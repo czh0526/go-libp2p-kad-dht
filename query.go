@@ -83,6 +83,7 @@ type lookupWithFollowupResult struct {
 func (dht *IpfsDHT) runLookupWithFollowup(ctx context.Context, target string, queryFn queryFn, stopFn stopFn) (*lookupWithFollowupResult, error) {
 	ctx, span := internal.StartSpan(ctx, "IpfsDHT.RunLookupWithFollowup", trace.WithAttributes(internal.KeyAsAttribute("Target", target)))
 	defer span.End()
+	fmt.Printf("【IpfsDHT】runLookupWithFollowup => target = %s\n", peer.ID(target))
 
 	// run the query
 	lookupRes, qps, err := dht.runQuery(ctx, target, queryFn, stopFn)
@@ -155,10 +156,13 @@ processFollowUp:
 func (dht *IpfsDHT) runQuery(ctx context.Context, target string, queryFn queryFn, stopFn stopFn) (*lookupWithFollowupResult, *qpeerset.QueryPeerset, error) {
 	ctx, span := internal.StartSpan(ctx, "IpfsDHT.RunQuery")
 	defer span.End()
+	fmt.Printf("【IpfsDHT】runQuery => target = %s\n", peer.ID(target))
 
+	fmt.Printf("【IpfsDHT】runQuery => target = %s\n", peer.ID(target))
 	// pick the K closest peers to the key in our Routing table.
 	targetKadID := kb.ConvertKey(target)
 	seedPeers := dht.routingTable.NearestPeers(targetKadID, dht.bucketSize)
+	fmt.Printf("【IpfsDHT】routingTable.NearestPeers => %v\n", seedPeers)
 	if len(seedPeers) == 0 {
 		routing.PublishQueryEvent(ctx, &routing.QueryEvent{
 			Type:  routing.QueryError,
@@ -274,6 +278,7 @@ type queryUpdate struct {
 func (q *query) run() {
 	ctx, span := internal.StartSpan(q.ctx, "IpfsDHT.Query.Run")
 	defer span.End()
+	fmt.Printf("【query】run => %v\n", peer.ID(q.key))
 
 	pathCtx, cancelPath := context.WithCancel(ctx)
 	defer cancelPath()

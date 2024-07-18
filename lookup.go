@@ -23,6 +23,7 @@ func (dht *IpfsDHT) GetClosestPeers(ctx context.Context, key string) ([]peer.ID,
 	ctx, span := internal.StartSpan(ctx, "IpfsDHT.GetClosestPeers", trace.WithAttributes(internal.KeyAsAttribute("Key", key)))
 	defer span.End()
 
+	fmt.Printf("【IpfsDHT】GetClosestPeers => key = %v\n", peer.ID(key))
 	if key == "" {
 		return nil, fmt.Errorf("can't lookup empty key")
 	}
