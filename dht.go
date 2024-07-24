@@ -243,6 +243,7 @@ func New(ctx context.Context, h host.Host, options ...Option) (*IpfsDHT, error) 
 
 	// Fill routing table with currently connected peers that are DHT servers
 	for _, p := range dht.host.Network().Peers() {
+		fmt.Printf("【dht】peerFound => %s\n", p)
 		dht.peerFound(p)
 	}
 
@@ -485,7 +486,7 @@ func (dht *IpfsDHT) runFixLowPeersLoop() {
 			case <-dht.ctx.Done():
 				return
 			}
-
+			fmt.Printf("【IpfsDHT】schedule fixLowPeers ... %s \n", time.Now().Format(time.DateTime))
 			dht.fixLowPeers()
 		}
 	}()
@@ -500,6 +501,7 @@ func (dht *IpfsDHT) fixLowPeers() {
 	// we try to add all peers we are connected to to the Routing Table
 	// in case they aren't already there.
 	for _, p := range dht.host.Network().Peers() {
+		fmt.Printf("\t try to find peer => %s\n", p)
 		dht.peerFound(p)
 	}
 

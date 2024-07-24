@@ -242,7 +242,6 @@ func (r *RtRefreshManager) doRefresh(ctx context.Context, forceRefresh bool) err
 	defer span.End()
 
 	var merr error
-
 	if err := r.queryForSelf(ctx); err != nil {
 		merr = multierror.Append(merr, err)
 	}
@@ -337,6 +336,7 @@ func (r *RtRefreshManager) queryForSelf(ctx context.Context) error {
 	ctx, span := internal.StartSpan(ctx, "RefreshManager.queryForSelf")
 	defer span.End()
 
+	//fmt.Printf("【RtRefreshManager】queryForSelf => %s\n", r.dhtPeerId)
 	if err := r.runRefreshDHTQuery(ctx, string(r.dhtPeerId)); err != nil {
 		span.SetStatus(codes.Error, err.Error())
 		return fmt.Errorf("failed to query for self, err=%s", err)
