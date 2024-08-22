@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 	"runtime"
 	"sort"
@@ -813,11 +814,11 @@ func checkForWellFormedTablesOnce(t *testing.T, dhts []*IpfsDHT, minPeers, avgPe
 
 func printRoutingTables(dhts []*IpfsDHT) {
 	// the routing tables should be full now. let's inspect them.
-	fmt.Printf("checking routing table of %d\n", len(dhts))
+	log.Printf("checking routing table of %d\n", len(dhts))
 	for _, dht := range dhts {
-		fmt.Printf("checking routing table of %s\n", dht.self)
+		log.Printf("checking routing table of %s\n", dht.self)
 		dht.routingTable.Print()
-		fmt.Println("")
+		log.Println("")
 	}
 }
 
@@ -1060,9 +1061,9 @@ func TestProvidesMany(t *testing.T) {
 		// the routing tables should be full now. let's inspect them.
 		t.Logf("checking routing table of %d", nDHTs)
 		for _, dht := range dhts {
-			fmt.Printf("checking routing table of %s\n", dht.self)
+			log.Printf("checking routing table of %s\n", dht.self)
 			dht.routingTable.Print()
-			fmt.Println("")
+			log.Println("")
 		}
 	}
 

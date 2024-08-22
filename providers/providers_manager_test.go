@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	log2 "log"
 	"os"
 	"testing"
 	"time"
@@ -299,7 +300,7 @@ func TestLargeProvidersSet(t *testing.T) {
 			_, _ = p.GetProviders(ctx, h)
 		}
 		elapsed := time.Since(start)
-		fmt.Printf("query %f ms\n", elapsed.Seconds()*1000)
+		log2.Printf("query %f ms\n", elapsed.Seconds()*1000)
 	}
 }
 

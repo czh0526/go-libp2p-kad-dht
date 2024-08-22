@@ -3,7 +3,7 @@
 package dht
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"testing"
 
@@ -16,7 +16,7 @@ func TestMain(m *testing.M) {
 		Max: 4096,
 	})
 	if err != nil {
-		fmt.Println("failed to increase open file descriptor limit, can't run tests")
+		log.Println("failed to increase open file descriptor limit, can't run tests")
 		os.Exit(1)
 	}
 	os.Exit(m.Run())
